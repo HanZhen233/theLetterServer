@@ -2,7 +2,10 @@ package com.hanzhen.theletterserver.entity;
 
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "user")
@@ -10,12 +13,20 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     int userId;
+    @Column(unique =true)
     String name;
+    @JsonIgnore
     String password;
-    String phone;
-    String gender;
-    int roleId;
+//    String phone;
+    String email;
+    int gender;
 
+    //与角色表进行关联,并创建一张新表来维护二者关系
+    @ManyToMany(cascade = {CascadeType.REFRESH},fetch = FetchType.EAGER)
+    @JoinTable(name = "user_role",
+            joinColumns = {@JoinColumn(name = "user_id")},
+            inverseJoinColumns = {@JoinColumn(name = "role_id")})
+    private List<Role> roles;
     public int getUserId() {
         return userId;
     }
@@ -40,35 +51,47 @@ public class User {
         this.password = password;
     }
 
-    public String getPhone() {
-        return phone;
-    }
+//    public String getPhone() {
+//        return phone;
+//    }
+//
+//    public void setPhone(String phone) {
+//        this.phone = phone;
+//    }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public String getGender() {
+    public int getGender() {
         return gender;
     }
 
-    public void setGender(String gender) {
+    public void setGender(int gender) {
         this.gender = gender;
     }
 
-    public int getRoleId() {
-        return roleId;
+    public List<Role> getRoles() {
+        return roles;
     }
 
-    public void setRoleId(int roleId) {
-        this.roleId = roleId;
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
     }
 
-    public User(String name, String password, String phone, String gender, int roleId) {
+    public String getEmail() {
+        return email;
+    }
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public User(String name, String password, String email, int gender, List<Role> roles) {
         this.name = name;
         this.password = password;
-        this.phone = phone;
+        this.email = email;
         this.gender = gender;
-        this.roleId = roleId;
+        this.roles = roles;
     }
+
+    public User() {
+    }
+
+
 }

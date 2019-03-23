@@ -1,6 +1,7 @@
 package com.hanzhen.theletterserver.entity;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "role")
@@ -8,8 +9,7 @@ public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     int roleID;
-    String roleName;
-
+    String name;
     public int getRoleID() {
         return roleID;
     }
@@ -18,15 +18,18 @@ public class Role {
         this.roleID = roleID;
     }
 
-    public String getRoleName() {
-        return roleName;
+    public String getName() {
+        return name;
     }
 
-    public void setRoleName(String roleName) {
-        this.roleName = roleName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public Role(String roleName) {
-        this.roleName = roleName;
+    public Role(String name) {
+        this.name = name;
+    }
+
+    public Role() {
     }
 }

@@ -10,26 +10,17 @@ public class Message {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     long messageId;
-    long letterId;
     Timestamp timestamp;
     int status;
     @Column(length = 2000)
     String content;
-
+    long senderId;
     public long getMessageId() {
         return messageId;
     }
 
     public void setMessageId(long messageId) {
         this.messageId = messageId;
-    }
-
-    public long getLetterId() {
-        return letterId;
-    }
-
-    public void setLetterId(long letterId) {
-        this.letterId = letterId;
     }
 
     public Timestamp getTimestamp() {
@@ -52,14 +43,26 @@ public class Message {
         return content;
     }
 
+    public long getSenderId() {
+        return senderId;
+    }
+
+    public void setSenderId(long senderId) {
+        this.senderId = senderId;
+    }
+
+    public Message(int status, String content, long senderId) {
+        this.status = status;
+        this.content = content;
+        this.senderId = senderId;
+    }
+
     public void setContent(String content) {
         this.content = content;
     }
-
-    public Message(long letterId, Timestamp timestamp, int status, String content) {
-        this.letterId = letterId;
-        this.timestamp = timestamp;
+    public Message(int status, String content) {
         this.status = status;
         this.content = content;
     }
+
 }

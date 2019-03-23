@@ -2,6 +2,8 @@ package com.hanzhen.theletterserver.entity;
 
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import java.util.List;
 
 
 @Entity
@@ -9,46 +11,62 @@ import javax.persistence.*;
 public class Letter {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    long letterID;
-    String sender;
-    String receiver;
-    String status;
+    /*信件的id*/
+    long letterId;
+    /*发送者的id*/
+    long senderId;
+    /*接受者的id*/
+    long receiverId;
+    /*是否被人接收*/
+    int status;
+    @OneToMany(cascade = {CascadeType.REMOVE,CascadeType.PERSIST})
+    @JoinColumn(name = "letter_id")
+    List<Message> messages;
 
-    public long getLetterID() {
-        return letterID;
+    public long getLetterId() {
+        return letterId;
     }
 
-    public void setLetterID(long letterID) {
-        this.letterID = letterID;
+    public void setLetterId(long letterId) {
+        this.letterId = letterId;
     }
 
-    public String getSender() {
-        return sender;
+    public long getSenderId() {
+        return senderId;
     }
 
-    public void setSender(String sender) {
-        this.sender = sender;
+    public void setSenderId(long senderId) {
+        this.senderId = senderId;
     }
 
-    public String getReceiver() {
-        return receiver;
+    public long getReceiverId() {
+        return receiverId;
     }
 
-    public void setReceiver(String receiver) {
-        this.receiver = receiver;
+    public void setReceiverId(long receiverId) {
+        this.receiverId = receiverId;
     }
 
-    public String getStatus() {
+    public int  getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(int status) {
         this.status = status;
     }
 
-    public Letter(String sender, String receiver, String status) {
-        this.sender = sender;
-        this.receiver = receiver;
+
+    public List<Message> getMessages() {
+        return messages;
+    }
+
+    public void setMessages(List<Message> messages) {
+        this.messages = messages;
+    }
+
+    public Letter(long senderId, int status, List<Message> messages) {
+        this.senderId = senderId;
         this.status = status;
+        this.messages = messages;
     }
 }
