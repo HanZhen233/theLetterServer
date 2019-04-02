@@ -19,7 +19,7 @@ public class Letter {
     long receiverId;
     /*是否被人接收*/
     int status;
-    @OneToMany(cascade = {CascadeType.REMOVE,CascadeType.PERSIST})
+    @OneToMany(cascade = {CascadeType.ALL})
     @JoinColumn(name = "letter_id")
     List<Message> messages;
 
@@ -63,9 +63,23 @@ public class Letter {
     public void setMessages(List<Message> messages) {
         this.messages = messages;
     }
+    /*增加消息*/
+    public  void addMessage(Message message){
+        this.messages.add(message);
+    }
+
+    public Letter() {
+    }
 
     public Letter(long senderId, int status, List<Message> messages) {
         this.senderId = senderId;
+        this.status = status;
+        this.messages = messages;
+    }
+
+    public Letter(long senderId, long receiverId, int status, List<Message> messages) {
+        this.senderId = senderId;
+        this.receiverId = receiverId;
         this.status = status;
         this.messages = messages;
     }

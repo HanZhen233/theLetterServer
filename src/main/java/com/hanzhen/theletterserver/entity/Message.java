@@ -1,6 +1,8 @@
 package com.hanzhen.theletterserver.entity;
 
 
+import org.hibernate.annotations.CreationTimestamp;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
 
@@ -10,6 +12,7 @@ public class Message {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     long messageId;
+    @CreationTimestamp
     Timestamp timestamp;
     int status;
     @Column(length = 2000)
@@ -47,6 +50,10 @@ public class Message {
         return senderId;
     }
 
+    public void setContent(String content) {
+        this.content = content;
+    }
+
     public void setSenderId(long senderId) {
         this.senderId = senderId;
     }
@@ -57,9 +64,11 @@ public class Message {
         this.senderId = senderId;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+
+
+    public Message() {
     }
+
     public Message(int status, String content) {
         this.status = status;
         this.content = content;

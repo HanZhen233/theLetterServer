@@ -7,10 +7,7 @@ import com.hanzhen.theletterserver.service.impl.UserDetailsImpl;
 import com.hanzhen.theletterserver.service.impl.UserServiceImpl;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
@@ -42,9 +39,9 @@ public class UserController {
     @RequestMapping(value = "/addUser",method = RequestMethod.POST)
     public boolean addUser(@RequestParam("username")String username, @RequestParam("password")String password,
 //                           @RequestParam("phone") String phone,
-                           @RequestParam("gender") int gender,
+                           @RequestParam("gender") String gender0,
                            @RequestParam("email") String email){
-
+        int gender=Integer.parseInt(gender0);
         if (userService.finUserByName(username)!=null){
             return false;
         }

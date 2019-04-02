@@ -9,4 +9,5 @@ import java.util.List;
 public interface LetterRepository extends JpaRepository<Letter,Long> {
     List<Letter> findByStatus(int status);
     Letter findByLetterId(long id);
+    List<Letter> findBySenderIdOrReceiverId(long id,long id1);
 }

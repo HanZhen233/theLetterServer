@@ -2,12 +2,9 @@ package com.hanzhen.theletterserver.controller;
 
 import com.hanzhen.theletterserver.entity.Letter;
 import com.hanzhen.theletterserver.entity.Message;
-import com.hanzhen.theletterserver.service.LetterService;
 import com.hanzhen.theletterserver.service.impl.LetterServiceImpl;
 import com.hanzhen.theletterserver.service.impl.UserDetailsImpl;
 import com.hanzhen.theletterserver.service.impl.UserServiceImpl;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -37,7 +34,7 @@ public class LetterController {
         return true;
     }
     /*随机锁定接受信件*/
-    @RequestMapping(value = "/receiverLetter",method = RequestMethod.GET)
+        @RequestMapping(value = "/receiverLetter",method = RequestMethod.GET)
     public Letter receiverLetter(){
         /*获得登录者信息*/
         UserDetailsImpl securityUser=userService.getSecurityUser();
@@ -46,10 +43,10 @@ public class LetterController {
            return null;
        /*如果是自己的发的信则取消*/
        if (letter.getSenderId()==securityUser.getUserId()){
-           letter.setStatus(0);
-           letterService.saveLetter(letter);
+        return null;
        }
-        letter.setReceiverId(securityUser.getUserId());
+       letter.setReceiverId(securityUser.getUserId());
+       letter.setStatus(1);
         letterService.saveLetter(letter);
         return letter;
     }
@@ -64,6 +61,11 @@ public class LetterController {
         letter.setStatus(0);
         letterService.saveLetter(letter);
         return true;
+    }
+    @RequestMapping(value ="/getLetterList",method = RequestMethod.GET)
+    public List<Letter> getLetterList(){
+        UserDetailsImpl securityUser=userService.getSecurityUser();
+        return letterService.getLetterList(securityUser.getUserId(),securityUser.getUserId());
     }
 
 }

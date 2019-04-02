@@ -31,9 +31,12 @@ public class LetterServiceImpl implements LetterService{
     }
 
     @Override
-    public Letter getLetterById(Long id) {
-
+    public Letter getLetterById(long id) {
         return letterRepository.findByLetterId(id);
     }
 
+    @Override
+    public List<Letter> getLetterList(long id,long id1) {
+        return letterRepository.findBySenderIdOrReceiverId(id,id1);
+    }
 }
