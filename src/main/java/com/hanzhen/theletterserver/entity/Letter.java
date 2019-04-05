@@ -18,6 +18,8 @@ public class Letter {
     /*接受者的id*/
     long receiverId;
     /*是否被人接收*/
+    String  senderName;
+    String  receiverName;
     int status;
     @OneToMany(cascade = {CascadeType.ALL})
     @JoinColumn(name = "letter_id")
@@ -71,8 +73,32 @@ public class Letter {
     public Letter() {
     }
 
-    public Letter(long senderId, int status, List<Message> messages) {
+    public String getSenderName() {
+        return senderName;
+    }
+
+    public void setSenderName(String senderName) {
+        this.senderName = senderName;
+    }
+
+    public String getReceiverName() {
+        return receiverName;
+    }
+
+    public void setReceiverName(String receiverName) {
+        this.receiverName = receiverName;
+    }
+
+//    public Letter(long senderId, int status, List<Message> messages) {
+////        this.senderId = senderId;
+////        this.status = status;
+////        this.messages = messages;
+////    }
+
+
+    public Letter(long senderId, String senderName, int status, List<Message> messages) {
         this.senderId = senderId;
+        this.senderName = senderName;
         this.status = status;
         this.messages = messages;
     }
@@ -80,6 +106,15 @@ public class Letter {
     public Letter(long senderId, long receiverId, int status, List<Message> messages) {
         this.senderId = senderId;
         this.receiverId = receiverId;
+        this.status = status;
+        this.messages = messages;
+    }
+
+    public Letter(long senderId, long receiverId, String senderName, String receiverName, int status, List<Message> messages) {
+        this.senderId = senderId;
+        this.receiverId = receiverId;
+        this.senderName = senderName;
+        this.receiverName = receiverName;
         this.status = status;
         this.messages = messages;
     }

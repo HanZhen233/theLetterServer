@@ -29,7 +29,7 @@ public class LetterController {
         List<Message>messages= new ArrayList<>();
         messages.add(message);
         /*根据相关信息形成邮件信息,发信人ID,0代表未被人收到,0代表未被人锁定*/
-        Letter letter=new Letter(securityUser.getUserId(),0,messages);
+        Letter letter=new Letter(securityUser.getUserId(),securityUser.getUsername(),0,messages);
         letterService.saveLetter(letter);
         return true;
     }
@@ -46,6 +46,7 @@ public class LetterController {
         return null;
        }
        letter.setReceiverId(securityUser.getUserId());
+       letter.setReceiverName(securityUser.getUsername());
        letter.setStatus(1);
         letterService.saveLetter(letter);
         return letter;
@@ -62,6 +63,7 @@ public class LetterController {
         letterService.saveLetter(letter);
         return true;
     }
+    /*获得所有的信*/
     @RequestMapping(value ="/getLetterList",method = RequestMethod.GET)
     public List<Letter> getLetterList(){
         UserDetailsImpl securityUser=userService.getSecurityUser();
